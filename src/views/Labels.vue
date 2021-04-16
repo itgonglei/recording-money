@@ -1,9 +1,7 @@
 <template>
-    <div>
+    <Layout>
         Labels
-        <hr/>
-        <Nav/>
-    </div>
+    </Layout>
 </template>
 
 <script lang="ts">
