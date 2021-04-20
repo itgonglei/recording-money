@@ -8,22 +8,17 @@
             <li>住</li>
             <li>行</li>
             <li>食</li>
-            <li>衣</li>
-            <li>住</li>
-            <li>行</li>
-            <li>食</li>
-            <li>衣</li>
-            <li>住</li>
-            <li>行</li>
-            <li>食</li>
         </ul>
     </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'Tags'
-  };
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class Tags extends Vue {
+}
 </script>
 
 <style lang="scss" scoped>
