@@ -1,23 +1,46 @@
 <template>
     <div class="tags">
-        <div class="new">
-            <button>新增标签</button>
-        </div>
-        <ul class="current">
-            <li>衣</li>
-            <li>住</li>
-            <li>行</li>
-            <li>食</li>
-        </ul>
+      <div class="new">
+        <button @click="add">新增标签</button>
+      </div>
+      <ul class="current">
+        <li v-for="tags in dataSource" :key="tags" @click="toggle(tags)"
+            :class="{select:selectTags.indexOf(tags) >=0 && 'select'}">
+          {{ tags }}
+        </li>
+      </ul>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue {
+  @Prop() dataSource: [] | undefined;
+  selectTags: string[] = [];
+
+  toggle(tags: string) {
+    const index = this.selectTags.indexOf(tags);
+    if (index >= 0) {
+      this.selectTags.splice(index, 1);
+    } else {
+      this.selectTags.push(tags);
+    }
+  }
+
+  add() {
+    const msg = window.prompt('请填写新标签');
+    if (msg === '') {
+      window.alert('标签名不能为空!');
+      return;
+    }
+    if (this.dataSource) {
+      this.$emit('update:dataSource', [...this.dataSource, msg]);
+    }
+  }
+
 }
 </script>
 
@@ -36,14 +59,20 @@ export default class Tags extends Vue {
             overflow: auto;
 
             > li {
-                background: #d9d9d9;
-                $h: 24px;
-                height: $h;
-                line-height: $h;
-                border-radius: ($h/2);
-                padding: 0 16px;
-                margin-right: 12px;
-                margin-top: 4px;
+              $bg: #d9d9d9;
+              background: $bg;
+              $h: 24px;
+              height: $h;
+              line-height: $h;
+              border-radius: ($h/2);
+              padding: 0 16px;
+              margin-right: 12px;
+              margin-top: 4px;
+
+              &.select {
+                background: darken($bg, 50%);
+                color: white;
+              }
 
             }
         }
