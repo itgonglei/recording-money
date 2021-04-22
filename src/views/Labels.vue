@@ -7,7 +7,7 @@
         </router-link>
       </div>
       <div class="createTag-wrapper">
-        <button class="createTag">新建标签</button>
+        <button class="createTag" @click="createTag">新建标签</button>
       </div>
     </Layout>
 </template>
@@ -15,10 +15,20 @@
 <script lang="ts">
   import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
+  import tagListModel from '@/models/tagListModel';
 
   @Component
   export default class Labels extends Vue{
 
+    createTag(){
+      const name = window.prompt('请填写新标签');
+      if (name) {
+        const message = tagListModel.create(name);
+        console.log(message);
+      }
+
+
+    }
   }
 </script>
 
