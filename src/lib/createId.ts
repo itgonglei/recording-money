@@ -5,4 +5,4 @@ function createId() {
   return id;
 }
 
-export default createId();
+export default createId;

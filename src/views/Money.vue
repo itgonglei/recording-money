@@ -1,11 +1,11 @@
 <template>
-    <Layout class-prefix="layout">
-      {{ record }}
-      <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-      <types :value.sync="record.type"/>
-      <Notes @update:value="onUpdateNotes"/>
-      <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
-    </Layout>
+  <Layout class-prefix="layout">
+    {{ record }}
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
+    <types :value.sync="record.type"/>
+    <Notes @update:value="onUpdateNotes"/>
+    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -16,15 +16,16 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import recordModel from '@/models/recordModel';
+import tagListModel from '@/models/tagListModel';
 
 const recordList = recordModel.fetch();
-
-
+const tagList = tagListModel.fetch();
 @Component({
   components: {Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住', '行', '彩票'];
+
+  tags = tagList;
   // eslint-disable-next-line no-undef
   recordList: RecordItem[] = recordList;
   // eslint-disable-next-line no-undef
@@ -56,8 +57,8 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss">
-    .layout-content {
-        display: flex;
-        flex-direction: column-reverse;
-    }
+.layout-content {
+  display: flex;
+  flex-direction: column-reverse;
+}
 </style>
