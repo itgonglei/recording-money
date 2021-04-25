@@ -17,6 +17,7 @@ type TagListModel = {
 const tagListModel: TagListModel = {
   data: [],
   fetch() {
+    console.log('标签');
     this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
     return this.data;
   },
@@ -32,7 +33,7 @@ const tagListModel: TagListModel = {
     const idList = this.data.map(item => item.id);
     if (idList.indexOf(id) >= 0) {
       const names = this.data.map(item => item.name);
-      if (names.indexOf(name)) {
+      if (names.indexOf(name)  >= 0) {
         return 'duplicated';
       } else {
         const tag = this.data.filter(item => item.id === id)[0];
@@ -48,7 +49,6 @@ const tagListModel: TagListModel = {
     let index = -1;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].id === id) {
-
         index = i;
         break;
       }

@@ -1,14 +1,15 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left"/>
+      <Icon class="leftIcon" name="left" @click="goBack"/>
       <span class="title"> 编辑标签</span>
       <span class="rightIcon"></span>
     </div>
-    <div class="">
-      <label>标签名:
-        <input type="text"/>
-      </label>
+    <div class="form-wrapper">
+      <FormItem :value="tag.name"
+                @update:value="update"
+                filed-name="标签名"
+                placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
       <Button @click="remove">删除标签</Button>
@@ -20,21 +21,31 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
+import FormItem from '@/components/Money/FormItem.vue';
+import Button from '@/components/Money/Button.vue';
 
-@Component
+@Component({
+  components: {Button, FormItem: FormItem}
+})
 export default class EditLabel extends Vue {
   tag?: { id: string, name: string } = undefined;
 
   created() {
     const id = this.$route.params.id;
-    console.log(id);
     tagListModel.fetch();
     const tags = tagListModel.data;
     const tag = tags.filter(t => t.id === id)[0];
     if (tag) {
-      console.log(tag);
+      this.tag = tag;
     } else {
       this.$router.replace('/404');
+    }
+  }
+
+
+  update(name: string) {
+    if (this.tag) {
+      tagListModel.update(this.tag.id, name);
     }
   }
 
@@ -42,9 +53,14 @@ export default class EditLabel extends Vue {
     if (this.tag) {
       tagListModel.remove(this.tag.id);
       this.$router.back();
-    }else {
-      window.alert('删除失败')
+    } else {
+      window.alert('删除失败');
     }
+  }
+
+  goBack() {
+    console.log('11111');
+    this.$router.back();
   }
 }
 </script>
