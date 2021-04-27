@@ -1,24 +1,7 @@
-import Vue from 'vue';
-import App from './App.vue';
-import './registerServiceWorker';
-import router from './router';
-import store from './store';
-import Nav from '@/components/Nav.vue';
-import Layout from '@/components/Layout.vue';
-import Icon from '@/components/Icon.vue';
 import tagListModel from '@/models/tagListModel';
 import recordListModel from '@/models/recordModel';
 
-Vue.config.productionTip = false;
-
-//全局引入
-Vue.component('Nav', Nav);
-Vue.component('Layout', Layout);
-Vue.component('Icon', Icon);
-
-
-
-window.store ={
+const store ={
   //tag store
   tagList : tagListModel.fetch(),
   findTag(id:string){
@@ -44,8 +27,4 @@ window.store ={
   createRecord : (record:RecordItem) =>  recordListModel.create(record)
 }
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app');
+export  default store;
