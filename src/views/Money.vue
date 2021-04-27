@@ -45,16 +45,12 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    // eslint-disable-next-line no-undef
-    const record2: RecordItem = recordModel.clone(this.record);
-    record2.createdAt = new Date();
-    this.recordList.push(record2);
+    recordModel.create(this.record);
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    console.log('是否是这里');
-    recordModel.save(this.recordList);
+    recordModel.save();
   }
 
 }
