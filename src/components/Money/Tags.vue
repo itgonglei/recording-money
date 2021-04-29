@@ -1,25 +1,30 @@
 <template>
-    <div class="tags">
-      <div class="new">
-        <button @click="add">新增标签</button>
-      </div>
-      <ul class="current">
-        <li v-for="tags in tagList" :key="tags.id" @click="toggle(tags)"
-            :class="{select:selectTags.indexOf(tags) >=0 && 'select'}">
-          {{ tags.name }}
-        </li>
-      </ul>
+  <div class="tags">
+    <div class="new">
+      <button @click="add">新增标签</button>
     </div>
+    <ul class="current">
+      <li v-for="tags in tagList" :key="tags.id" @click="toggle(tags)"
+          :class="{select:selectTags.indexOf(tags) >=0 && 'select'}">
+        {{ tags.name }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import store from '@/store/index2';
 import {Component} from 'vue-property-decorator';
 
-@Component
+@Component({
+  computed: {
+    tagList() {
+      return [];
+    }
+
+  }
+})
 export default class Tags extends Vue {
-  tagList = store.fetchTags();
   selectTags: string[] = [];
 
   toggle(tags: string) {
@@ -29,7 +34,7 @@ export default class Tags extends Vue {
     } else {
       this.selectTags.push(tags);
     }
-    this.$emit('update:value',this.selectTags)
+    this.$emit('update:value', this.selectTags);
   }
 
   add() {
@@ -38,55 +43,55 @@ export default class Tags extends Vue {
       window.alert('标签名不能为空!');
       return;
     }
-    store.createTag(msg);
+    // store.createTag(msg);
   }
 
 }
 </script>
 
 <style lang="scss" scoped>
-    .tags {
-        font-size: 14px;
-        padding: 16px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column-reverse;
+.tags {
+  font-size: 14px;
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column-reverse;
 
 
-        > .current {
-            display: flex;
-            flex-wrap: wrap;
-            overflow: auto;
+  > .current {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
 
-            > li {
-              $bg: #d9d9d9;
-              background: $bg;
-              $h: 24px;
-              height: $h;
-              line-height: $h;
-              border-radius: ($h/2);
-              padding: 0 16px;
-              margin-right: 12px;
-              margin-top: 4px;
+    > li {
+      $bg: #d9d9d9;
+      background: $bg;
+      $h: 24px;
+      height: $h;
+      line-height: $h;
+      border-radius: ($h/2);
+      padding: 0 16px;
+      margin-right: 12px;
+      margin-top: 4px;
 
-              &.select {
-                background: darken($bg, 50%);
-                color: white;
-              }
+      &.select {
+        background: darken($bg, 50%);
+        color: white;
+      }
 
-            }
-        }
-
-        > .new {
-            padding-top: 16px;
-
-            button {
-                background: transparent;
-                border: none;
-                color: #999;
-                border-bottom: 1px solid;
-                padding: 0 4px;
-            }
-        }
     }
+  }
+
+  > .new {
+    padding-top: 16px;
+
+    button {
+      background: transparent;
+      border: none;
+      color: #999;
+      border-bottom: 1px solid;
+      padding: 0 4px;
+    }
+  }
+}
 </style>
