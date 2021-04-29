@@ -19,13 +19,16 @@ import {Component} from 'vue-property-decorator';
 @Component({
   computed: {
     tagList() {
-      return [];
+      return this.$store.state.tagList;
     }
-
   }
 })
 export default class Tags extends Vue {
   selectTags: string[] = [];
+
+  created() {
+    this.$store.commit('fetchTags');
+  }
 
   toggle(tags: string) {
     const index = this.selectTags.indexOf(tags);
@@ -39,11 +42,8 @@ export default class Tags extends Vue {
 
   add() {
     const msg = window.prompt('请填写新标签');
-    if (!msg) {
-      window.alert('标签名不能为空!');
-      return;
-    }
-    // store.createTag(msg);
+    if (!msg) { return window.alert('标签名不能为空!');}
+    this.$store.commit('createTag', msg);
   }
 
 }
