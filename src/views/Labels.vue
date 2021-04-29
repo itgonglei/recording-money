@@ -14,23 +14,29 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Money/Button.vue';
+import {mixins} from 'vue-class-component';
+import TagHelper from '@/mixins/TagHelper';
 
 @Component({
-  components: {Button}
+  components: {Button},
+
+  computed:{
+    tags(){
+      return this.$store.state.tagList;
+    }
+  }
 })
-export default class Labels extends Vue {
-  //TODO
-  tags = [];// store.tagList;
+export default class Labels extends mixins(TagHelper) {
+  beforeCreate(){
+    this.$store.commit('fetchTags')
+  }
 
   createTag() {
-    const name = window.prompt('请填写新标签');
-    if (name) {
-      //TODO
-      // store.createTag(name);
-    }
+    const msg = window.prompt('请填写新标签');
+    if (!msg) { return window.alert('标签名不能为空!');}
+    this.$store.commit('createTag', msg);
   }
 }
 </script>
