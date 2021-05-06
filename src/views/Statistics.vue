@@ -5,10 +5,12 @@
     <div>
       <ol>
         <li v-for="(group,index) in result" :key="index">
-          <h3>{{ group.title }}</h3>
+          <h3 class="title">{{ group.title }}</h3>
           <ol>
-            <li v-for="item in group.items" :key="item.id">
-              {{ item.amount }} {{ item.createdAt }}
+            <li class="record" v-for="item in group.items" :key="item.id">
+              <span>{{ tagString(item.tags) }}</span>
+              <span class="notes">{{ item.notes }}</span>
+              <span>￥{{ item.amount }}</span>
             </li>
           </ol>
         </li>
@@ -28,6 +30,11 @@ import recordsTypeList from '@/constants/recordsTypeList';
   components: {Tabs}
 })
 export default class Statistics extends Vue {
+  // eslint-disable-next-line no-undef
+  tagString(tags: Tag[]) {
+    return tags.length === 0 ? '无' : tags.join(',');
+  }
+
   get recordList() {
     return this.$store.state.recordList;
   }
@@ -74,6 +81,29 @@ export default class Statistics extends Vue {
 
   .interval-tabs-item {
     height: 48px;
+  }
+
+  %item {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 8px 16px;
+
+  }
+
+  .title {
+    @extend %item;
+  }
+
+  .record {
+    background: white;
+    @extend %item;
+  }
+
+  .notes {
+    margin-right: auto;
+    margin-left: 16px;
+    color: #999;
   }
 
 
