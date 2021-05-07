@@ -1,5 +1,10 @@
+type RootState = {
+  recordList: RecordItem[],
+  tagList: Tag[],
+  currentTag?: Tag
+}
 type RecordItem = {
-  tags: string[]
+  tags: Tag[]
   notes: string
   type: string
   amount: number // 数据类型 object | string
@@ -19,3 +24,5 @@ type TagListModel = {
   save: () => void
 }
 
+interface Window {
+}
