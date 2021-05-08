@@ -28,7 +28,7 @@ window.onload = function () {
 
 if (document.documentElement.clientWidth > 500) {
   const img = document.createElement('img');
-  img.src = '/QR.png';
+  img.src = 'QR.png';
   img.style.position = 'fixed';
   img.style.maxWidth = '50%';
   img.style.left = '50%';
